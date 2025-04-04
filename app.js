@@ -86,6 +86,5 @@ app.delete("/listings/:id", async (req, res) => {
   let deletedListing = await Listing.findByIdAndDelete(id);
   res.redirect("/listings");
 })
-app.listen(port, () => {
-  console.log(`Server is listening on ${port}`);
-});
+
+module.exports = app;
