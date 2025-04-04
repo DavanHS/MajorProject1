@@ -7,7 +7,7 @@
       }
     ],
     "routes": [
-      { "src": "/listings(.*)", "dest": "app.js" }
+      { "src": "/(.*)", "dest": "app.js" }
     ]
   }
   
