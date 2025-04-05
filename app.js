@@ -45,7 +45,7 @@ app.get("/", (req, res) => {
 
 //Viewing all listings
 app.get("/listings", async (req, res) => {
-  const allListings = await Listing.find().limit(1);
+  const allListings = await Listing.find();
   res.render("listings/index.ejs", { allListings });
 });
 
@@ -87,4 +87,6 @@ app.delete("/listings/:id", async (req, res) => {
   res.redirect("/listings");
 })
 
-module.exports = app;
+app.listen(port, (req, res) => {
+  console.log(`Listening on port ${port}`);
+});
