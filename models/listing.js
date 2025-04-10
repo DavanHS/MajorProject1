@@ -8,18 +8,21 @@ const listingSchema = new Schema({
   },
   description: String,
   image: {
-    filename: { type: String }, // Added type for filename
+    filename: { type: String },
     url: {
       type: String,
       default:
-        "https://www.freepik.com/free-vector/house-rent-concept-with-placard_9843844.htm",
+        "/images/Default_image.jpg",
       set: (v) =>
         v && v.trim() !== ""
           ? v
-          : "https://www.freepik.com/free-vector/house-rent-concept-with-placard_9843844.htm",
+          : "/images/Default_image.jpg",
     },
   },
-  price: Number,
+  price: {
+    type: Number,
+    default: 0
+  },
   location: String,
   country: String,
 });
