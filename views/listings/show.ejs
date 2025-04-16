@@ -1,7 +1,7 @@
 <% layout("./layouts/boilerplate") %>
 <div class="row">
   <div class="col-8 offset-2">
-    <h3 class="show-heading">Listing Details</h3>
+    <h3 class="show-heading fw-semibold mt-2 fs-2"><%= listing.title %></h3>
     <div class="card show-card">
       <img
         src="<%= listing.image.url %>"
@@ -9,7 +9,7 @@
         alt="..."
       />
       <div class="card-body">
-        <p class="card-text fw-semibold mt-2 fs-5"><%= listing.title %></p>
+        <!-- <p class="card-text fw-semibold mt-2 fs-3"><%= listing.title %></p> -->
         <ul class="list-group list-group-flush">
           <li class="list-group-item"><%= listing.description %></li>
           <li class="list-group-item fw-bold">
@@ -21,12 +21,68 @@
       </div>
     </div>
     <div class="btns">
-        <form action="/listings/<%= listing._id%>/edit" method="GET">
-            <button class="btn btn-dark show-btn show-edit" type="submit">Edit</button>
-        </form>
-        <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST">
-            <button class="btn btn-dark show-btn" type="submit">Delete</button>
-        </form>
+      <form action="/listings/<%= listing._id%>/edit" method="GET">
+        <button class="btn btn-dark show-btn show-edit" type="submit">
+          Edit
+        </button>
+      </form>
+      <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST">
+        <button class="btn btn-dark show-btn" type="submit">Delete</button>
+      </form>
+    </div>
+    <hr />
+    <div class="review col-12">
+      <form
+        action="/listings/<%= listing.id %>/reviews"
+        novalidate
+        class="needs-validation"
+        method="POST"
+      >
+        <div class="my-4">
+          <label for="rating" class="form-label">Rating</label>
+          <input
+            type="range"
+            id="rating"
+            class="form-range"
+            min="1"
+            max="5"
+            step="1"
+            name="review[rating]"
+          />
+        </div>
+        <div class="my-4">
+          <label for="comments" class="form-label">Comments</label>
+          <textarea
+            name="review[comment]"
+            id="comments"
+            class="form-control"
+            rows="5"
+            cols="75"
+            required
+          ></textarea>
+          <div class="valid-feedback">Ayyo you goated my guy</div>
+          <div class="invalid-feedback">Enter a comment</div>
+        </div>
+        <button type="submit" class="btn btn-outline-dark mb-3">Submit</button>
+      </form>
+    </div>
+    <hr />
+    <div class="container">
+      <h4><b>Reviews</b></h4>
+      <div class="row">
+        <% for(rev of listing.reviews){ %>
+        <div class="card col-5 mb-3 ms-3">
+          <div class="card-body">
+            <h5 class="card-title">Jane Doe</h5>
+            <p class="card-text"><%= rev.rating %></p>
+            <p class="card-text"><%= rev.comment %></p>
+            <form action="/listings/<%= listing._id %>/reviews/<%= rev._id %>?_method=DELETE" method="POST">
+              <button class="btn btn-sm btn-dark my-3">DELETE</button>
+            </form>
+          </div>
+        </div>
+        <% } %>
+      </div>
     </div>
   </div>
 </div>

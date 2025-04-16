@@ -62,9 +62,9 @@ html, body {
   font-size: 2.5rem;
   font-weight: 700;
 }
-.card {
+.listing-card {
   border: none;
-  margin: 2rem;
+  margin: 2rem 2rem 2rem 0;
 }
 
 .card-body {
@@ -76,16 +76,18 @@ html, body {
   width: 100%;
   object-fit: cover;
   height: 15rem;
-  transition: 100ms;
+  transition: 75ms ease-in;
 }
 
 .card-img-top:hover {
+  transform: scale(1.05);
   box-shadow: 12px 12px 12px rgba(0, 0, 0, 0.2);
 }
 
 .listing-link {
   text-decoration: none;
   padding: 0;
+  color: black;
 }
 .col {
   align-items: center;
@@ -103,7 +105,7 @@ html, body {
 
 .btns {
   display: flex;
-  margin: 1rem 2rem;
+  margin: 1rem 2rem 1rem 0;
 }
 
 .show-btn {
