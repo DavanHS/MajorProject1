@@ -70,8 +70,13 @@ html, body {
 .card-body {
   padding: 0;
 }
-
 .card-img-top {
+  border-radius: 1rem;
+  width: 100%;
+  object-fit: cover;
+  height: 15rem;
+}
+.index-card-img-top {
   border-radius: 1rem;
   width: 100%;
   object-fit: cover;
@@ -79,7 +84,7 @@ html, body {
   transition: 75ms ease-in;
 }
 
-.card-img-top:hover {
+.index-card-img-top:hover {
   transform: scale(1.05);
   box-shadow: 12px 12px 12px rgba(0, 0, 0, 0.2);
 }
