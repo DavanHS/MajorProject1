@@ -1,25 +1,27 @@
 <% layout("/layouts/boilerplate") %>
 <h3 class="index-heading">All Listings</h3>
-<div class="row row-cols-xxl-3 row-cols-xl-2 row-cols-lg-2">
-  <% for(let listing of allListings) { %>
-
-  <div class="col">
-    <div class="card listing-card" style="width: 25rem">
-      <a href="/listings/<%= listing._id %>" class="listing-link">
-        <img src="<%= listing.image.url %>" class="index-card-img-top" alt="..." />
-        <div class="card-body">
-          <p class="card-text fw-semibold mt-2 fs-4">
-            <%= listing.location %>, <%= listing.country %>
-          </p>
-          <p class="card-text">
-            <span class="fw-semibold fs-5"
-              >&#8377;<%= listing.price.toLocaleString("en-IN") %></span
-            >/ Night
-          </p>
-        </div>
-      </a>
+<div class="container-fluid index-container">
+  <div class="row justify-content-center">
+    <% for(let listing of allListings) { %>
+    <div class="col-xs-12 col-sm-6 col-xl-4 col-xxl-3">
+      <div class="card listing-card">
+        <a href="/listings/<%= listing._id %>" class="listing-link">
+          <img src="<%= listing.image.url %>" class="index-card-img-top" />
+          <div class="card-body">
+            <p class="card-text fw-semibold mt-2 fs-4">
+              <%= listing.location %>, <%= listing.country %>
+            </p>
+            <p class="card-text">
+              <span class="fw-semibold fs-5"
+                >&#8377;<%= listing.price.toLocaleString("en-IN") %></span
+              >/ Night
+            </p>
+          </div>
+        </a>
+      </div>
     </div>
+    <% } %>
   </div>
-
-  <% } %>
 </div>
+
+

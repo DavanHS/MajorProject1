@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV != "production") {
+  require("dotenv").config();
+}
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -5,9 +9,10 @@ const port = 8080;
 const path = require("path");
 const medthodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
-const mongoUrl = "mongodb://127.0.0.1:27017/majorProject1";
+const dbURL = process.env.ATLASDB_URL;
 const ExpressError = require("./utils/ExpressError.js");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -24,25 +29,37 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(medthodOverride("_method"));
 app.engine("ejs", ejsMate);
 
-
 main()
   .then(() => console.log("Database is working"))
   .catch((err) => console.log(err));
 
 async function main() {
-  mongoose.connect(mongoUrl);
+  mongoose.connect(dbURL);
 }
 
+const store = MongoStore.create({
+  mongoUrl: dbURL,
+  crypto: {
+    secret: process.env.SECRET,
+  },
+  touchAfter: 24 * 3600,
+});
+
+store.on("error", () => {
+  console.log("ERROR in MONGO SESSION STORE", err);
+});
+
 const sessionOptions = {
-  secret: "mysecretcode",
+  store,
+  secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: {
     expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
     maxAge: 7 * 24 * 60 * 60 * 1000,
-    httpOnly: true
-  }
-}
+    httpOnly: true,
+  },
+};
 
 //Test Run
 app.get("/", (req, res) => {
@@ -61,22 +78,14 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
-  res.locals.error = req.flash("error")
+  res.locals.error = req.flash("error");
+  res.locals.currUser = req.user;
   next();
-})
-
-app.get("/demouser", async(req, res) => {
-  let fakeUser = new User({
-    email: "student@gmail.com",
-    username: "delta-student"
-  })
-  let registeredUser = await User.register(fakeUser, "helloworld");
-  res.send(registeredUser);
-})
+});
 
 app.use("/listings", listingsRouter);
 app.use("/listings/:id/reviews", reviewsRouter);
-app.use("/", userRouter)
+app.use("/", userRouter);
 
 app.all(/.*/, (req, res, next) => {
   next(new ExpressError(404, "Page Not Found!"));
