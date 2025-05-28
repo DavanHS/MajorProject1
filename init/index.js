@@ -1,8 +1,11 @@
+if (process.env.NODE_ENV != "production") {
+  require("dotenv").config();
+}
 const mongoose = require("mongoose");
 const initData = require("./data.js");
 const Listing = require("../models/listing.js");
 
-const mongoUrl = "mongodb://127.0.0.1:27017/majorProject1";
+const mongoUrl = process.env.ATLASDB_URL;
 
 main()
   .then(() => console.log("Database is working"))
@@ -14,7 +17,7 @@ async function main() {
 
 const initDB = async () => {
     await Listing.deleteMany({});
-    initData.data = initData.data.map((obj) => ({...obj, owner: '6811a4176f197ed2817df3fb' }))
+    initData.data = initData.data.map((obj) => ({...obj, owner: '6818c998919f33d2d0f68cd2' }))
     await Listing.insertMany(initData.data);
     console.log("Data was initalised");
 };
