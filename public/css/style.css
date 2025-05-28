@@ -19,7 +19,7 @@ body {
 /* navbar */
 .navbar {
   position: sticky;
-  z-index: 1030 !important;
+  z-index: 1030;
   height: 5rem;
   background-color: white;
 }
