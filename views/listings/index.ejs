@@ -1,6 +1,6 @@
 <% layout("/layouts/boilerplate") %>
 <h3 class="index-heading">All Listings</h3>
-<div class="container-fluid index-container">
+<div class="container-fluid index-container" id="listing-container">
   <div class="row justify-content-center">
     <% for(let listing of allListings) { %>
     <div class="col-xs-12 col-sm-6 col-xl-4 col-xxl-3">
@@ -22,6 +22,7 @@
     </div>
     <% } %>
   </div>
+  <script src="/js/script.js"></script>
 </div>
 
 
